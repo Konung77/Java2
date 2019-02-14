@@ -21,7 +21,7 @@ public class TournamentLauncher
     Animal member4 = new Human(23, "Ivan ivanov", Gender.MALE);
 
     Course c = new Course(); // Создаем полосу препятствий
-    Team team = new Team("Команда", member1, member2, member3, member4); // Создаем команду
+    Team team = new Team("Команда 1", member1, member2, member3, member4); // Создаем команду
     c.doIt(team); // Просим команду пройти полосу
     team.showResults(); // Показываем результаты
   }

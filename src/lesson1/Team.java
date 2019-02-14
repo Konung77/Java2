@@ -36,7 +36,7 @@ public class Team {
 // массив препятствий, метод который будет просить команду пройти всю полосу;
 class Course {
     public void doIt(Team team) {
-        // прыгаем на 0,5 м
+        // прыгаем на 0.5 м
         for (int i = 0; i < team.members.length; i++) {
             // если участник не прошел предыдущее испытание, к текущему он не допускается
             if (team.results[i]) team.results[i] = team.members[i].jump(0.5);
