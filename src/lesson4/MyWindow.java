@@ -2,6 +2,7 @@ package lesson4;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class MyWindow extends JFrame {
     private JPanel panel;
@@ -18,12 +19,30 @@ public class MyWindow extends JFrame {
         JTextArea big, small;
         bigField = new JTextArea(20,20);
         smallField = new JTextField(20);
+        smallField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                super.keyPressed(e);
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    bigField.append(smallField.getText() + "\n");
+                    smallField.setText("");
+                }
+            }
+        });
         sendButton = new JButton("Отправить");
+        sendButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                bigField.append(smallField.getText()+"\n");
+                smallField.setText("");
+            }
+        });
         panel.add(bigField);
         panel.add(smallField);
         panel.add(sendButton);
         setContentPane(panel);
         setVisible(true);
+        smallField.requestFocus();
     }
 
     public static void main(String[] args) {
