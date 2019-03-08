@@ -65,5 +65,17 @@ public class Server
     clientHandlers.remove(clientHandler);
   }
 
-
+  // 2. * Реализовать личные сообщения, если клиент пишет «/w nick3 Привет»,
+  // то только клиенту с ником nick3 должно прийти сообщение «Привет»
+  public boolean notificationClientByNickWithNewMessage(String nick, String msg)
+  {
+    for (ClientHandler clientHandler : clientHandlers)
+    {
+      if (clientHandler.getNickName() == nick) {
+        clientHandler.sendMessage(msg);
+        return true;
+      }
+    }
+    return false; //Не удалось отправить сообщение, нет такого ника
+  }
 }

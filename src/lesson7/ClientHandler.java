@@ -15,7 +15,7 @@ public class ClientHandler implements Runnable
   private PrintWriter outMsg;
   private Scanner inMsg;
   private static int clientCount = 0;
-
+  private String nickName;
 
   public ClientHandler(Socket clientSocket, Server server)
   {
@@ -24,6 +24,24 @@ public class ClientHandler implements Runnable
       clientCount++;
       this.clientSocket = clientSocket;
       this.server = server;
+      this.nickName = Integer.toString(clientCount);
+      this.outMsg = new PrintWriter(clientSocket.getOutputStream());
+      this.inMsg = new Scanner(clientSocket.getInputStream());
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+  }
+
+  public ClientHandler(Socket clientSocket, Server server, String nickName)
+  {
+    try
+    {
+      clientCount++;
+      this.clientSocket = clientSocket;
+      this.server = server;
+      this.nickName = nickName;
       this.outMsg = new PrintWriter(clientSocket.getOutputStream());
       this.inMsg = new Scanner(clientSocket.getInputStream());
     }
@@ -38,7 +56,7 @@ public class ClientHandler implements Runnable
   {
     try
     {
-      server.notificationAllClientWithNewMessage("New client in our chat");
+      server.notificationAllClientWithNewMessage("New client in our chat: " + nickName);
       server.notificationAllClientWithNewMessage("In our chat = " + clientCount + "clients!");
 
 
@@ -51,8 +69,14 @@ public class ClientHandler implements Runnable
           {
             break;
           }
-          System.out.println(clientMsg);
-          server.notificationAllClientWithNewMessage(clientMsg);
+          String[] words = clientMsg.split(" ", 3);
+          if (words[0].equals("/w")) {
+            server.notificationClientByNickWithNewMessage(words[1], words[2]);
+            System.out.println(words[2]);
+          } else {
+            System.out.println(clientMsg);
+            server.notificationAllClientWithNewMessage(clientMsg);
+          }
         }
       }
 
@@ -88,4 +112,13 @@ public class ClientHandler implements Runnable
       e.printStackTrace();
     }
   }
+
+  public String getNickName() {
+    return nickName;
+  }
+
+  public void setNickName(String nickName) {
+    this.nickName = nickName;
+  }
+
 }
