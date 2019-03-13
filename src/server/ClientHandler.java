@@ -39,10 +39,10 @@ public class ClientHandler implements Runnable
     try
     {
       server.notificationAllClientWithNewMessage("New client in our chat");
-      server.notificationAllClientWithNewMessage("In our chat client count = " + clientCount);
+      server.notificationAllClientWithNewMessage("Counts of clients in chat: " + clientCount);
 
 
-      while (true)
+    while (true)
       {
         if (inMsg.hasNext())
         {

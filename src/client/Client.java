@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.*;
 
@@ -55,8 +57,8 @@ public class Client extends JFrame
     JPanel bottomPanel = new JPanel(new BorderLayout());
     add(bottomPanel, BorderLayout.SOUTH);
 
-    JLabel countsOfClientLabel = new JLabel("Counts of clients in chat :");
-    add(countsOfClientLabel, BorderLayout.NORTH);
+//    JLabel countsOfClientLabel = new JLabel("Counts of clients in chat :");
+//    add(countsOfClientLabel, BorderLayout.NORTH);
 
     JButton sendButton = new JButton("SEND");
     bottomPanel.add(sendButton, BorderLayout.EAST);
@@ -113,10 +115,10 @@ public class Client extends JFrame
           if (inMsg.hasNext())
           {
             String msg = inMsg.nextLine();
-            String clientInChat = "Counts of clients in chat : ";
+            String clientInChat = "Counts of clients in chat: ";
             if (msg.indexOf(clientInChat) == 0)
             {
-              countsOfClientLabel.setText(clientInChat);
+              labelCountOfClient.setText(msg);
             }
             else
             {
@@ -162,6 +164,8 @@ public class Client extends JFrame
       }
     });
     setVisible(true);
+    Timer timer = new Timer();
+    timer.schedule(testAnonym,120*1000);
   }
 
   private void sendMsg()
@@ -171,4 +175,12 @@ public class Client extends JFrame
     outMsg.flush();
     jtfMsg.setText("");
   }
+
+  TimerTask testAnonym = new TimerTask() {
+      @Override
+      public void run() {
+          String clientName = jtfName.getText();
+          if (clientName.isEmpty() || clientName.equalsIgnoreCase("Your name")) dispose();
+      }
+  };
 }
