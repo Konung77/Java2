@@ -19,7 +19,7 @@ public class Server
     Socket clientSocket = null;
     try
     {
-      serverSocket = new ServerSocket(8899);
+      serverSocket = new ServerSocket(8888);
       System.out.println("Server launched");
 
       while (true)
